@@ -8,10 +8,10 @@ public class OtelloGrid
  public OtelloGrid(int aismarts) 
  {
   discs = new Disc[8][8]; 
-  discs[2][3] = new Disc(2,3,false);
-  discs[3][4] = new Disc(3,4,false);
-  discs[3][3] = new Disc(3,3,true);
-  discs[2][4] = new Disc(2,4,true);
+  discs[3][3] = new Disc(3,3,false);
+  discs[4][4] = new Disc(4,4,false);
+  discs[4][3] = new Disc(4,3,true);
+  discs[3][4] = new Disc(3,4,true);
   
   this.aismarts = aismarts;
   if(aismarts == 0)
@@ -126,10 +126,7 @@ public class OtelloGrid
   }
   return flip;
  }
- public void draw(Graphics2D g2)
- {
-   
- }
+ 
  private void update()
  {
    
@@ -137,5 +134,9 @@ public class OtelloGrid
  private void playAI()
  {
    
+ }
+ public Disc[][] getDiscs()
+ {
+ return discs;
  }
 }

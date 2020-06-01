@@ -1,3 +1,4 @@
+import java.awt.Graphics2D;
 public class OtelloGrid
 {
  private boolean aiplays;
@@ -56,7 +57,7 @@ public class OtelloGrid
   //checking up-right diagonal
   if(c < 6 && r < 6)
   {
-    //black case
+   //black case
    if(isBlack && discs[r+2][c+2] != null && discs[r+2][c+2].isBlack() && discs[r+1][c+1] != null && !discs[r+1][c+1].isBlack()) 
    flip = true;
    //white case
@@ -73,7 +74,7 @@ public class OtelloGrid
    else if(!isBlack && discs[r+2][c] != null && !discs[r+2][c].isBlack() && discs[r+1][c] != null && discs[r+1][c].isBlack()) 
    flip = true; 
   }
-  //checking right down
+  //checking right down diagonal
   if( r < 6 && c > 1)
   {
    //black case
@@ -93,8 +94,41 @@ public class OtelloGrid
    else if(!isBlack && discs[r][c-2] != null && !discs[r][c-2].isBlack() && discs[r][c-1] != null && discs[r][c-1].isBlack()) 
    flip = true;
   }
-  
+  //checking down left diagonal
+  if( c > 1 && r > 1)
+  {
+   //black case
+   if(isBlack && discs[r-2][c-2] != null && discs[r-2][c-2].isBlack() && discs[r-1][c-1] != null && !discs[r-1][c-1].isBlack()) 
+   flip = true;
+   //white case
+   else if(!isBlack && discs[r-2][c-2] != null && !discs[r-2][c-2].isBlack() && discs[r-1][c-1] != null && discs[r-1][c-1].isBlack()) 
+   flip = true; 
+  }
+  //checking left
+  if(r > 1)
+  {
+   //black case
+   if(isBlack && discs[r-2][c] != null && discs[r-2][c].isBlack() && discs[r-1][c] != null && !discs[r-1][c].isBlack()) 
+   flip = true;
+   //white case
+   else if(!isBlack && discs[r-2][c] != null && !discs[r-2][c].isBlack() && discs[r-1][c] != null && discs[r-1][c].isBlack()) 
+   flip = true;  
+  }
+  //checking up left diagonal
+  if(r > 1 && c < 6)
+  {
+   //black case
+   if(isBlack && discs[r-2][c+2] != null && discs[r-2][c+2].isBlack() && discs[r-1][c+1] != null && !discs[r-1][c+1].isBlack()) 
+   flip = true;
+   //white case
+   else if(!isBlack && discs[r-2][c+2] != null && !discs[r-2][c+2].isBlack() && discs[r-1][c+1] != null && discs[r-1][c+1].isBlack()) 
+   flip = true; 
+  }
   return flip;
+ }
+ public void draw(Graphics2D g2)
+ {
+   
  }
  private void update()
  {
