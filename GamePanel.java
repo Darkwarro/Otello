@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements MouseListener
         try
         {
           Image discImage = ImageIO.read(new File("images/black" + discs[r][c].isBlack() + ".png"));
-          g2.drawImage(discImage, 42 + (r * 90), 42 + (c * 90), 88, 88, null);
+          g2.drawImage(discImage, 43 + (r * 90), 43 + (c * 90), 86, 86, null);
         }
         
         catch(Exception e)
