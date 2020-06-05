@@ -23,15 +23,14 @@ public class GamePanel extends JPanel implements MouseListener
 {
   private Image backgroundImage;
   private GamePanel gamePanel;
+  private OtelloGrid grid;
   private boolean isBlack = false;
-  
-  
-  private ArrayList<Player> players;
-  private Player dealer;
-  private Deck deck;
+  private int turns = 4;
   
   public GamePanel()
   {
+    addMouseListener(this); //adds a mouse listener 
+    
     setLayout(null);
     try
     {
@@ -42,151 +41,8 @@ public class GamePanel extends JPanel implements MouseListener
     }
     
     gamePanel = this;
+    grid = new OtelloGrid(0);
     
-    players = new ArrayList<Player>();
-    dealer = new Player("Dealer");
-    deck = new Deck(1);
-    deck.shuffle();    
-    
-    startGame();
-  }
-  
-  private void startGame()
-  {
-    class Game implements Runnable
-    {
-      public void run()
-      {
-        /*
-        try
-        {
-          Thread.sleep(1000);
-        }
-        catch(InterruptedException exc)
-        {
-        }
-        */
-          
-          for(int turns = 5; turns <= 64; turns ++)
-          {
-            play(isBlack);
-            
-          isBlack = !isBlack;
-          }
-          
-          repaint();
-          
-            JOptionPane.showMessageDialog(null, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-          
-        
-      }
-    }
-    Thread gameThread = new Thread(new Game());
-    gameThread.start();
-  }
-  
-  private void play(boolean player)
-  {
-    
-   /* if(*//* player cannot play *//*) //if player has no move to play
-    {
-      //the turn will automatically pass to the other player
-    }*/
-    /*
-    else //if player can play
-    {
-      PlayPanel playPanel = new PlayPanel(player, deck, this); //play panel will be used to get commands (hit, stand, double) from the player
-      playPanel.setSize(1200, 200);
-      add(playPanel);
-      playPanel.setLocation(0, 600);
-      revalidate();
-      
-      class UpAnimation implements Runnable
-      {
-        public void run()
-        {
-          int y = 800;
-          while(y != 600)
-          {
-            y-=5;
-            playPanel.setLocation(0, y);
-            try
-            {
-              Thread.sleep(5);
-            }
-            catch(InterruptedException exc)
-            {
-            }
-          }
-        }
-      }
-      
-      class DownAnimation implements Runnable
-      {
-        public void run()
-        {
-          int y = 600;
-          while(y != 800)
-          {
-            y+=5;
-            playPanel.setLocation(0, y);
-            try
-            {
-              Thread.sleep(5);
-            }
-            catch(InterruptedException exc)
-            {
-            }
-          }
-        }
-      }
-      
-      Thread upThread = new Thread(new UpAnimation());
-      Thread downThread = new Thread(new DownAnimation());
-      upThread.start();
-      try
-      {
-        upThread.join();
-      }
-      catch(InterruptedException exc)
-      {
-      }
-      
-      while(!playPanel.playDone())
-      {
-        try
-        {
-          Thread.sleep(100);
-        }
-        catch(InterruptedException exc)
-        {
-        }
-      }
-      downThread.start();
-      try
-      {
-        downThread.join();
-      }
-      catch(InterruptedException exc)
-      {
-      }
-      remove(playPanel);
-      revalidate();
-      
-      if(player.checkBust()) //if player goes over 21, show a message that tells how much he has lost
-      {
-        JOptionPane.showMessageDialog(this, player.getUserName() + " busted and lost $" + player.getBet() + ".", "Busted", JOptionPane.INFORMATION_MESSAGE);      
-      }
-    }
-    try
-    {
-      Thread.sleep(1000);
-    }
-    catch(InterruptedException exc)
-    {
-    }
-    
-    */
   }
   
   public void paintComponent(Graphics g)
@@ -194,109 +50,59 @@ public class GamePanel extends JPanel implements MouseListener
     Graphics2D g2 = (Graphics2D) g;
     g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
     
-    /*
-    ArrayList<Card> dealerCardArrayList = dealer.getHand().getCardArrayList();    
-    if(dealerCardArrayList != null)
+    Disc[][] discs = grid.getDiscs();
+    
+    for(int r = 0; r < 8; r++)
     {
-      for(int cardIndex = 0; cardIndex < dealerCardArrayList.size(); cardIndex++)
+      for(int c = 0; c < 8; c++)
       {
-        Card card = dealerCardArrayList.get(cardIndex); //draw dealer's cards
         try
         {
-          Image cardImage = ImageIO.read(new File("cards/" + card.toString() + ".png"));
-          g2.drawImage(cardImage, 520 + (cardIndex * 25), 100, 80, 120, null);             
+          Image discImage = ImageIO.read(new File("images/black" + discs[r][c].isBlack() + ".png"));
+          g2.drawImage(discImage, 43 + (r * 90), 43 + (c * 90), 86, 86, null);
         }
-        catch(IOException e)
+        
+        catch(Exception e)
         {
+          //no image or no disc
         }   
       }
-    } 
-    
-    for(int playerIndex = 0; playerIndex < players.size(); playerIndex++) //draw players' chips and cards
-    {      
-      Player player = players.get(playerIndex);
-      ArrayList<Integer> chipArrayList = player.getChipArrayList();
-      ArrayList<Card> cardArrayList = player.getHand().getCardArrayList();
-      
-      if(chipArrayList != null)
-      {
-        for(int chipIndex = 0; chipIndex < chipArrayList.size(); chipIndex++)
-        {
-          int chipValue = chipArrayList.get(chipIndex);
-          try
-          {
-            Image chipImage = ImageIO.read(new File("chips/" + chipValue + ".png"));
-            if(playerIndex == 0) //draw chips and cards based on player's position on te table
-            {
-              g2.drawImage(chipImage, 80, 410 + (chipIndex * 25), 60, 60, null);
-            }
-            else if(playerIndex == 1)
-            {
-              g2.drawImage(chipImage, 320, 480 + (chipIndex * 25), 60, 60, null);
-            }
-            else if(playerIndex == 2)
-            {
-              g2.drawImage(chipImage, 580, 510 + (chipIndex * 25), 60, 60, null);
-            }
-            else if(playerIndex == 3)
-            {
-              g2.drawImage(chipImage, 840, 480 + (chipIndex * 25), 60, 60, null);
-            }
-            else if(playerIndex == 4)
-            {
-              g2.drawImage(chipImage, 1080, 410 + (chipIndex * 25), 60, 60, null);
-            }
-          }
-          catch(IOException e)
-          {
-          }   
-        }
-      }
-      
-      if(cardArrayList != null)
-      {
-        for(int cardIndex = 0; cardIndex < cardArrayList.size(); cardIndex++)
-        {
-          Card card = cardArrayList.get(cardIndex);
-          try
-          {
-            Image cardImage = ImageIO.read(new File("cards/" + card.toString() + ".png"));
-            if(playerIndex == 0)
-            {
-              g2.drawImage(cardImage, 10 + (cardIndex * 25), 290, 80, 120, null);
-            }
-            else if(playerIndex == 1)
-            {
-              g2.drawImage(cardImage, 260 + (cardIndex * 25), 350, 80, 120, null);
-            }
-            else if(playerIndex == 2)
-            {
-              g2.drawImage(cardImage, 520 + (cardIndex * 25), 390, 80, 120, null);
-            }
-            else if(playerIndex == 3)
-            {
-              g2.drawImage(cardImage, 760 + (cardIndex * 25), 360, 80, 120, null);
-            }
-            else if(playerIndex == 4)
-            {
-              g2.drawImage(cardImage, 1010 + (cardIndex * 25), 290, 80, 120, null);
-            }
-          }
-          catch(IOException e)
-          {
-          }   
-        }
-      }   
     }
-    */
   }
-  
-  
-  
   
   public void mouseClicked(MouseEvent e) {}  
-  public void mouseEntered(MouseEvent e) //so that whenever the mouse enters the frame, the game is refreshed. Useful when the size of the array is changed.
-  {   
-  }
+  public void mouseExited(MouseEvent e) {} 
+  public void mouseEntered(MouseEvent e) {}
   public void mouseReleased(MouseEvent e) {} 
+  
+  public void mousePressed(MouseEvent e) 
+  {
+    if(e.getX() > 42 && e.getY() > 42 && e.getX() < 762 && e.getY() < 762)
+    {
+      System.out.println("X:" + (e.getX()-42)/90);
+      System.out.println("Y:" + (e.getY()-42)/90);
+      int xCor = (e.getX()-42)/90;
+      int yCor = (e.getY()-42)/90;
+      
+      int playability = grid.checkIfProperMove(xCor, yCor, isBlack);
+      if(playability > 0)
+      {
+        System.out.println("playability: "+playability);
+        grid.play(xCor, yCor, isBlack,playability);
+        repaint();
+        isBlack = !isBlack;
+        turns++;
+      }
+      else
+      {
+       System.out.println("U GOT BEEF? WE GOT BEEF, U GOT BEEF? YEAH BISH WE GOT BEEF: "+playability);
+       
+      }
+      
+      if(turns == 64)
+      {
+      JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+      }
+    }
+  } 
 }
