@@ -10,7 +10,7 @@ import java.awt.event.ComponentEvent;
 public class GameFrame extends JFrame implements ComponentListener
 {
   private static final int FRAME_WIDTH = 800;
-  private static final int FRAME_HEIGHT = 800;
+  private static final int FRAME_HEIGHT = 820;
   
   GamePanel panel;
   
@@ -19,7 +19,6 @@ public class GameFrame extends JFrame implements ComponentListener
     prepareFrame();
     initComponents();
     addComponents();
-    MusicPlayer.playMusic("sound/jazz.wav");
   }
  
  //Sets the necessary parameters for the frame.
@@ -52,18 +51,9 @@ public class GameFrame extends JFrame implements ComponentListener
     arg0.getComponent().setBounds(b.x, b.y, b.width, b.width*H/W);
   }
   
-  public void componentShown(ComponentEvent evt)
-  {
-    System.out.println("componentShown");
-  }
+  public void componentShown(ComponentEvent evt) {}
 
-  public void componentHidden(ComponentEvent evt)
-  {
-    System.out.println("componentHidden");
-  }
+  public void componentHidden(ComponentEvent evt) {}
 
-  public void componentMoved(ComponentEvent evt)
-  {
-    System.out.println("componentMoved");
-  }  
+  public void componentMoved(ComponentEvent evt) {}
 }

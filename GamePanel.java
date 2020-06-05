@@ -26,6 +26,8 @@ public class GamePanel extends JPanel implements MouseListener
   private OtelloGrid grid;
   private boolean isBlack = false;
   private int turns = 4;
+  private boolean consecutivePass = false;
+  private boolean gameOver = false;
   
   public GamePanel()
   {
@@ -43,6 +45,11 @@ public class GamePanel extends JPanel implements MouseListener
     gamePanel = this;
     grid = new OtelloGrid(0);
     
+  }
+  
+  public boolean getIsBlack()
+  {
+  return isBlack;
   }
   
   public void paintComponent(Graphics g)
@@ -90,12 +97,34 @@ public class GamePanel extends JPanel implements MouseListener
         repaint();
         isBlack = !isBlack;
         turns++;
+        consecutivePass = false;
       }
       
       if(turns == 64)
       {
-      JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        gameOver = true;
       }
+      
+      //hasLegalMove(boolean isBlack) method'u yapılmalı.
+      /*
+      if(grid.hasLegalMove(isBlack) = true)
+      {
+        JOptionPane.showMessageDialog(this, "You have no legal move!", JOptionPane.INFORMATION_MESSAGE);
+        isBlack = !isBlack;
+        if(consecutivePass = true)
+        {
+        JOptionPane.showMessageDialog(this, "both players passed in two consecutive rounds", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        gameOver = true;
+        }
+        consecutivePass = true;
+      }
+      */
     }
-  } 
+  }
+  
+  public boolean isGameOver()
+  {
+  return gameOver;
+  }
 }
