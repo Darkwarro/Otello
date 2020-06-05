@@ -97,9 +97,14 @@ public class GamePanel extends JPanel implements MouseListener
        
       }
       
-      if(turns == 64)
+      if(turns == 60 || grid.wincheck() == 2  || grid.wincheck() == 1)
       {
-      JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+       if(grid.wincheck() == 2) 
+       JOptionPane.showMessageDialog(this, "Black Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+       else if(grid.wincheck() == 1)
+       JOptionPane.showMessageDialog(this, "White Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+       else
+       JOptionPane.showMessageDialog(this, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
       }
     }
   } 

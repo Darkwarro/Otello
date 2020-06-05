@@ -84,18 +84,16 @@ public class GamePanel extends JPanel implements MouseListener
       int xCor = (e.getX()-42)/90;
       int yCor = (e.getY()-42)/90;
       
-      int playability = grid.checkIfProperMove(xCor, yCor, isBlack);
-      if(playability > 0)
+ 
+      if(grid.play(xCor, yCor, isBlack))
       {
-        System.out.println("playability: "+playability);
-        grid.play(xCor, yCor, isBlack,playability);
         repaint();
         isBlack = !isBlack;
         turns++;
       }
       else
       {
-       System.out.println("U GOT BEEF? WE GOT BEEF, U GOT BEEF? YEAH BISH WE GOT BEEF: "+playability);
+        System.out.println("U GOT BEEF? WE GOT BEEF");
        
       }
       

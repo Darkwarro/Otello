@@ -20,10 +20,11 @@ public class OtelloGrid
   aiplays = true;
  }
  //precondition: the move has been appropriately checked with check if proper move,
- public boolean play(int row, int column, boolean isBlack, int move)
+ public boolean play(int row, int column, boolean isBlack)
  {
   int r = row;
   int c = column;
+  Boolean didsomething = false;
   //checking middle
   if(r < 6 && c < 6 && c > 1 && r > 1)
   {
@@ -32,7 +33,7 @@ public class OtelloGrid
    {
     if(discs[r][c-i] == null) 
     {
-     return false;
+     break;
     }  
     else if(discs[r][c-i].isBlack() == isBlack && i != 1)
     {
@@ -40,19 +41,21 @@ public class OtelloGrid
      {
       discs[r][c-z].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
     }
     else if(discs[r][c-i].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;      
    }
    //UP RIGHT
    for(int i = 1; i < c && i < 8-r;i++)
    {
     if(discs[r+i][c-i] == null) 
     {
-     return false;
+     break;
     }  
     else if(discs[r+i][c-i].isBlack() == isBlack && i != 1)
     {
@@ -60,19 +63,21 @@ public class OtelloGrid
      {
       discs[r+z][c-z].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
     }
     else if(discs[r+i][c-i].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;       
    }
    //RIGHT
    for(int i = 1; i < 8-r;i++)
    {
     if(discs[r+i][c] == null) 
     {
-     return false;
+     break;
     }  
     else if(discs[r+i][c].isBlack() == isBlack && i != 1)
     {
@@ -80,39 +85,134 @@ public class OtelloGrid
      {
       discs[r+z][c].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
     }
     else if(discs[r+i][c].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;        
    }
    //RIGHT DOWN
    for(int i = 1; i < 8-c && i < 8-r ;i++)
    {
-    if(discs[r][c+i] == null) 
+    if(discs[r+i][c+i] == null) 
     {
-     return false;
+     break;
     }  
-    else if(discs[r][c-i].isBlack() == isBlack && i != 1)
+    else if(discs[r+i][c+i].isBlack() == isBlack && i != 1)
     {
      for(int z = 1; z <i;z++)
      {
-      discs[r][c-z].flip(); 
+      discs[r+z][c+z].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
     }
-    else if(discs[r][c-i].isBlack() != isBlack)
+    else if(discs[r+i][c+i].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;        
    }
     //DOWN
-   for(int i = 1; i < 8-c && i < 8-r ;i++)
+   for(int i = 1; i < 8-c ;i++)
    {
     if(discs[r][c+i] == null) 
     {
-     return false;
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   // DOWN LEFT
+   for(int i = 1; i < r && i < 8-c;i++)
+   {
+    if(discs[r-i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
+    }
+    else if(discs[r-i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // LEFT
+   for(int i = 1; i < r;i++)
+   {
+    if(discs[r-i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true;
+     break;
+    }
+    else if(discs[r-i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // UP LEFT
+   for(int i = 1; i < r && i < c;i++)
+   {
+    if(discs[r-i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c-i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c-z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+  }
+ //CHECKING EDGE 1 && EDGE4 
+  else if(( r < 6 && c < 6)  || ( r <6 && c > 1 ))
+  {
+   //UP
+   for(int i = 1; i < c;i++)
+   {
+    if(discs[r][c-i] == null) 
+    {
+     break;
     }  
     else if(discs[r][c-i].isBlack() == isBlack && i != 1)
     {
@@ -120,19 +220,41 @@ public class OtelloGrid
      {
       discs[r][c-z].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
     }
     else if(discs[r][c-i].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;      
    }
-   // DOWN LEFT
+   //UP RIGHT
+   for(int i = 1; i < c && i < 8-r;i++)
+   {
+    if(discs[r+i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c-i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r+z][c-z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r+i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;       
+   }
+   //RIGHT
    for(int i = 1; i < 8-r;i++)
    {
     if(discs[r+i][c] == null) 
     {
-     return false;
+     break;
     }  
     else if(discs[r+i][c].isBlack() == isBlack && i != 1)
     {
@@ -140,28 +262,179 @@ public class OtelloGrid
      {
       discs[r+z][c].flip(); 
      }
-     return true;
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
     }
     else if(discs[r+i][c].isBlack() != isBlack)
     {}
     else
-    return false;        
+    break;        
+   }
+   //RIGHT DOWN
+   for(int i = 1; i < 8-c && i < 8-r ;i++)
+   {
+    if(discs[r+i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r+z][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r+i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    //DOWN
+   for(int i = 1; i < 8-c ;i++)
+   {
+    if(discs[r][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
    }
   }
+  //CHECKING EDGE 2
+  else if((r > 1 && c < 6) ||  (r > 1 && c > 1))
+  {
+   //UP
+   for(int i = 1; i < c;i++)
+   {
+    if(discs[r][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c-i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r][c-z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;      
+   }
+   //DOWN
+   for(int i = 1; i < 8-c ;i++)
+   {
+    if(discs[r][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   // DOWN LEFT
+   for(int i = 1; i < r && i < 8-c;i++)
+   {
+    if(discs[r-i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c+i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c+z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // LEFT
+   for(int i = 1; i < r;i++)
+   {
+    if(discs[r-i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // UP LEFT
+   for(int i = 1; i < r && i < c;i++)
+   {
+    if(discs[r-i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c-i].isBlack() == isBlack && i != 1)
+    {
+     for(int z = 1; z <i;z++)
+     {
+      discs[r-z][c-z].flip(); 
+     }
+     discs[row][column] = new Disc(row,column,isBlack);
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   //CHECKING EDGE 3( RIGHT BOTTOM)
+   
+  }
+   if(aiplays)
+  this.playAI();
   
-  
-  
-  
-  else
-  return false;
+  return didsomething;
    
    
-  discs[row][column] = new Disc(row,column,isBlack);
+  
   
    
   //this.update(row, column, move);
-  if(aiplays)
-  this.playAI();
+ 
  }
   //precondition: r and c are positive numbers in the domain 0 <= r,c < 8
  public int checkIfProperMove(int row, int column, boolean isBlack)
