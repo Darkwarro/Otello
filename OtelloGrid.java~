@@ -791,6 +791,34 @@ public class OtelloGrid
  {
    
  }
+ public int wincheck()
+ {
+  boolean wfound = false;
+  boolean bfound = false;
+  for(int r = 0; r < discs.length;r++)
+  {
+   for(int c = 0; c < discs[0].length;c++)
+   {
+    if(discs[r][c] != null && discs[r][c].isBlack())
+    bfound = true;
+    if(discs[r][c] != null && !discs[r][c].isBlack())
+    wfound = true;
+   }
+  }
+  if(!bfound && wfound)
+  {
+   return 1;
+  }
+  else if(!wfound && bfound)
+  {
+   return 2; 
+  }
+  else
+  {
+   return 3;
+  }
+
+ }
  public Disc[][] getDiscs()
  {
  return discs;

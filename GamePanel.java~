@@ -94,6 +94,7 @@ public class GamePanel extends JPanel implements MouseListener
 
       if(grid.play(xCor, yCor, isBlack))
       {
+       
         repaint();
         isBlack = !isBlack;
         turns++;

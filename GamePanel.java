@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements MouseListener
 
       if(turns == 60 || grid.wincheck() == 2  || grid.wincheck() == 1)
       {
-        /*
+        
         JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         gameOver = true;
 
@@ -117,24 +117,32 @@ public class GamePanel extends JPanel implements MouseListener
        else if(grid.wincheck() == 1)
        JOptionPane.showMessageDialog(this, "White Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
        else
-       JOptionPane.showMessageDialog(this, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);*/
+       JOptionPane.showMessageDialog(this, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 
       }
 
       //hasLegalMove(boolean isBlack) method'u yapılmalı.
-      /*
-      if(grid.hasLegalMove(isBlack) = true)
+      boolean isLegal = false;
+      for(int r = 0; r < 8; r++)
       {
-        JOptionPane.showMessageDialog(this, "You have no legal move!", JOptionPane.INFORMATION_MESSAGE);
+       for(int c = 0; c < 8; c++)
+       {
+        if(grid.hasLegalMove(r,c,isBlack)) 
+        isLegal = true;
+       }
+      }
+      if(isLegal)
+      {
+        JOptionPane.showMessageDialog(this, "You have no legal move!"," The turn has skipped", JOptionPane.INFORMATION_MESSAGE);
         isBlack = !isBlack;
-        if(consecutivePass = true)
+        if(consecutivePass == true)
         {
-        JOptionPane.showMessageDialog(this, "both players passed in two consecutive rounds", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-        gameOver = true;
+         JOptionPane.showMessageDialog(this, "both players passed in two consecutive rounds", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+         gameOver = true;
         }
         consecutivePass = true;
       }
-      */
+     
     }
   }
 
