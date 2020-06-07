@@ -1144,21 +1144,18 @@ public class OtelloGrid
     else
     break;        
    }
-   //CHECKING EDGE 3( RIGHT BOTTOM)
-   
   }
   
   return didsomething;
-   
-   
-  
-  
-   
-  //this.update(row, column, move);
+ 
  
  }
  public Disc[][] getDiscs()
  {
  return discs;
+ }
+ public boolean checkPlace(int row, int column)
+ {
+  return discs[row][column] != null; 
  }
 }

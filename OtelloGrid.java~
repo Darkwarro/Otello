@@ -819,6 +819,344 @@ public class OtelloGrid
   }
 
  }
+ public boolean hasLegalMove(int row, int column, boolean isBlack)
+ {
+  int r = row;
+  int c = column;
+  Boolean didsomething = false;
+  //checking middle
+  if(discs[r][c] != null)
+  {
+   System.out.println("Nope, this space is filled bruh");
+   return false;
+  }
+  if(r < 6 && c < 6 && c > 1 && r > 1)
+  {
+   //UP
+   for(int i = 1; i < c;i++)
+   {
+    if(discs[r][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c-i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;      
+   }
+   //UP RIGHT
+   for(int i = 1; i < c && i < 8-r;i++)
+   {
+    if(discs[r+i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c-i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r+i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;       
+   }
+   //RIGHT
+   for(int i = 1; i < 8-r;i++)
+   {
+    if(discs[r+i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r+i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   //RIGHT DOWN
+   for(int i = 1; i < 8-c && i < 8-r ;i++)
+   {
+    if(discs[r+i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c+i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r+i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    //DOWN
+   for(int i = 1; i < 8-c ;i++)
+   {
+    if(discs[r][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   // DOWN LEFT
+   for(int i = 1; i < r && i < 8-c;i++)
+   {
+    if(discs[r-i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c+i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true;
+     break;
+    }
+    else if(discs[r-i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // LEFT
+   for(int i = 1; i < r;i++)
+   {
+    if(discs[r-i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true;
+     break;
+    }
+    else if(discs[r-i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // UP LEFT
+   for(int i = 1; i < r && i < c;i++)
+   {
+    if(discs[r-i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c-i].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+  }
+ //CHECKING EDGE 1 && EDGE4 
+  else if(( r < 6 && c < 6)  || ( r <6 && c > 1 ))
+  {
+   //UP
+   for(int i = 1; i < c;i++)
+   {
+    if(discs[r][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c-i].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true; break;
+    }
+    else if(discs[r][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;      
+   }
+   //UP RIGHT
+   for(int i = 1; i < c && i < 8-r;i++)
+   {
+    if(discs[r+i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c-i].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true; break;
+    }
+    else if(discs[r+i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;       
+   }
+   //RIGHT
+   for(int i = 1; i < 8-r;i++)
+   {
+    if(discs[r+i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true; break;
+    }
+    else if(discs[r+i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   //RIGHT DOWN
+   for(int i = 1; i < 8-c && i < 8-r ;i++)
+   {
+    if(discs[r+i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r+i][c+i].isBlack() == isBlack && i != 1)
+    {
+     
+     didsomething = true; break;
+    }
+    else if(discs[r+i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    //DOWN
+   for(int i = 1; i < 8-c ;i++)
+   {
+    if(discs[r][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+    
+     didsomething = true; break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+  }
+  //CHECKING EDGE 2
+  else if((r > 1 && c < 6) ||  (r > 1 && c > 1))
+  {
+   //UP
+   for(int i = 1; i < c;i++)
+   {
+    if(discs[r][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c-i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true; break;
+    }
+    else if(discs[r][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;      
+   }
+   //DOWN
+   for(int i = 1; i < 8-c ;i++)
+   {
+    if(discs[r][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r][c+i].isBlack() == isBlack && i != 1)
+    {
+  
+     didsomething = true; break;
+    }
+    else if(discs[r][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   // DOWN LEFT
+   for(int i = 1; i < r && i < 8-c;i++)
+   {
+    if(discs[r-i][c+i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c+i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c+i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // LEFT
+   for(int i = 1; i < r;i++)
+   {
+    if(discs[r-i][c] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c].isBlack() == isBlack && i != 1)
+    {
+
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+    // UP LEFT
+   for(int i = 1; i < r && i < c;i++)
+   {
+    if(discs[r-i][c-i] == null) 
+    {
+     break;
+    }  
+    else if(discs[r-i][c-i].isBlack() == isBlack && i != 1)
+    {
+     didsomething = true; break;
+    }
+    else if(discs[r-i][c-i].isBlack() != isBlack)
+    {}
+    else
+    break;        
+   }
+   //CHECKING EDGE 3( RIGHT BOTTOM)
+   
+  }
+  
+  return didsomething;
+   
+   
+  
+  
+   
+  //this.update(row, column, move);
+ 
+ }
  public Disc[][] getDiscs()
  {
  return discs;

@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements MouseListener
 
   public void paintComponent(Graphics g)
   {
+   System.out.println("Paint component kicks in");
     Graphics2D g2 = (Graphics2D) g;
     g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
@@ -94,7 +95,8 @@ public class GamePanel extends JPanel implements MouseListener
 
       if(grid.play(xCor, yCor, isBlack))
       {
-       
+        System.out.println("PAINTING ZIBBER");
+        revalidate();
         repaint();
         isBlack = !isBlack;
         turns++;
@@ -121,7 +123,6 @@ public class GamePanel extends JPanel implements MouseListener
 
       }
 
-      //hasLegalMove(boolean isBlack) method'u yapılmalı.
       boolean isLegal = false;
       for(int r = 0; r < 8; r++)
       {
@@ -131,7 +132,7 @@ public class GamePanel extends JPanel implements MouseListener
         isLegal = true;
        }
       }
-      if(isLegal)
+      if(!isLegal)
       {
         JOptionPane.showMessageDialog(this, "You have no legal move!"," The turn has skipped", JOptionPane.INFORMATION_MESSAGE);
         isBlack = !isBlack;
@@ -142,8 +143,14 @@ public class GamePanel extends JPanel implements MouseListener
         }
         consecutivePass = true;
       }
+     GamePanel.this.revalidate();
+     GamePanel.this.repaint();
+     if(grid.checkPlace(xCor,yCor));
+     System.out.println("IT IS THERE");
      
     }
+  
+   
   }
 
   public boolean isGameOver()
