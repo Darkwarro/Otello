@@ -1,0 +1,78 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+
+import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+
+public class IntroFrame extends JFrame
+{
+  private static final int FRAME_WIDTH = 400;
+  private static final int FRAME_HEIGHT = 400;
+  
+  private JPanel panel;
+   private JLabel greetingLabel;
+  private JLabel versusLabel;
+  private JButton pvpButton;
+  private JButton pvcButton;
+  
+  public IntroFrame()
+  {
+    addMouseListener(this); //adds a mouse listener 
+    prepareFrame();
+    initComponents();
+    addComponents();
+  }
+  
+  //Sets the necessary parameters for the frame.
+  private void prepareFrame()
+  {
+    setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    setResizable(false);
+    setTitle("Welcome to Othello");
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+  }
+  
+  private void initComponents()
+  {
+    panel = new JPanel();
+    //panel.setLayout(new GridLayout(1,1));
+    
+    greetingLabel = new JLabel("Welcome to Tic-Tac-Toe!"); //the label that greets the user
+    greetingLabel.setFont(new Font("New York Times", Font.PLAIN, 35)); //setting the font really big
+    versusLabel = new JLabel("Versus a Player or Computer?"); //user chooses the option
+     versusLabel.setFont(new Font("Address", Font.PLAIN, 25)); //setting the font medium
+    pvpButton = new JButton("P v P"); //enables the users to play against each other
+    pvcButton = new JButton("P v COM"); //enables the user to play against the computer
+    panel.add(greetingLabel);
+    panel.add(versusLabel);
+    panel.add(pvpButton);
+    panel.add(pvcButton);
+    
+    pvpButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          removeAll();
+          setVisible(false);
+          GameFrame game = new GameFrame();
+          game.setVisible(true);
+        }
+      });
+  }
+  
+  private void addComponents()
+  {
+    add(panel, BorderLayout.CENTER);
+  }
+}

@@ -28,11 +28,11 @@ public class GamePanel extends JPanel implements MouseListener
   private int turns = 4;
   private boolean consecutivePass = false;
   private boolean gameOver = false;
-
+  
   public GamePanel()
   {
     addMouseListener(this); //adds a mouse listener
-
+    
     setLayout(null);
     try
     {
@@ -41,25 +41,25 @@ public class GamePanel extends JPanel implements MouseListener
     catch(IOException e)
     {
     }
-
+    
     gamePanel = this;
     grid = new OtelloGrid(0);
-
+    
   }
-
+  
   public boolean getIsBlack()
   {
-  return isBlack;
+    return isBlack;
   }
-
+  
   public void paintComponent(Graphics g)
   {
-   System.out.println("Paint component kicks in");
+    System.out.println("Paint component kicks in");
     Graphics2D g2 = (Graphics2D) g;
     g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
-
+    
     Disc[][] discs = grid.getDiscs();
-
+    
     for(int r = 0; r < 8; r++)
     {
       for(int c = 0; c < 8; c++)
@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements MouseListener
           Image discImage = ImageIO.read(new File("images/black" + discs[r][c].isBlack() + ".png"));
           g2.drawImage(discImage, 43 + (r * 90), 43 + (c * 90), 86, 86, null);
         }
-
+        
         catch(Exception e)
         {
           //no image or no disc
@@ -77,25 +77,22 @@ public class GamePanel extends JPanel implements MouseListener
       }
     }
   }
-
+  
   public void mouseClicked(MouseEvent e) {}
   public void mouseExited(MouseEvent e) {}
   public void mouseEntered(MouseEvent e) {}
   public void mouseReleased(MouseEvent e) {}
-
+  
   public void mousePressed(MouseEvent e)
   {
     if(e.getX() > 42 && e.getY() > 42 && e.getX() < 762 && e.getY() < 762)
     {
-      System.out.println("X:" + (e.getX()-42)/90);
-      System.out.println("Y:" + (e.getY()-42)/90);
       int xCor = (e.getX()-42)/90;
       int yCor = (e.getY()-42)/90;
-
-
+      
+      
       if(grid.play(xCor, yCor, isBlack))
       {
-        System.out.println("PAINTING ZIBBER");
         repaint();
         isBlack = !isBlack;
         turns++;
@@ -103,33 +100,32 @@ public class GamePanel extends JPanel implements MouseListener
       }
       else
       {
-        System.out.println("U GOT BEEF? WE GOT BEEF");
-
+        System.out.println("You cannot place a disc there");
       }
-
-      if(turns == 60 || grid.wincheck() == 2  || grid.wincheck() == 1)
+      
+      if(turns == 64 || grid.wincheck() == 2  || grid.wincheck() == 1)
       {
         
         JOptionPane.showMessageDialog(this, "All the discs are placed", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         gameOver = true;
-
-       if(grid.wincheck() == 2)
-       JOptionPane.showMessageDialog(this, "Black Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-       else if(grid.wincheck() == 1)
-       JOptionPane.showMessageDialog(this, "White Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-       else
-       JOptionPane.showMessageDialog(this, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-
+        
+        if(grid.wincheck() == 2)
+          JOptionPane.showMessageDialog(this, "Black Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        else if(grid.wincheck() == 1)
+          JOptionPane.showMessageDialog(this, "White Won!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        else
+          JOptionPane.showMessageDialog(this, "All the discs are placed.", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        
       }
-
+      
       boolean isLegal = false;
       for(int r = 0; r < 8; r++)
       {
-       for(int c = 0; c < 8; c++)
-       {
-        if(grid.hasLegalMove(r,c,isBlack)) 
-        isLegal = true;
-       }
+        for(int c = 0; c < 8; c++)
+        {
+          if(grid.hasLegalMove(r,c,isBlack)) 
+            isLegal = true;
+        }
       }
       if(!isLegal)
       {
@@ -137,21 +133,21 @@ public class GamePanel extends JPanel implements MouseListener
         isBlack = !isBlack;
         if(consecutivePass == true)
         {
-         JOptionPane.showMessageDialog(this, "both players passed in two consecutive rounds", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-         gameOver = true;
+          JOptionPane.showMessageDialog(this, "both players passed in two consecutive rounds", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+          gameOver = true;
         }
         consecutivePass = true;
       }
-     if(grid.checkPlace(xCor,yCor));
-     System.out.println("IT IS THERE");
-     
+      if(grid.checkPlace(xCor,yCor)); //bu ne olm
+      //System.out.println("IT IS THERE");
+      
     }
-  
-   
+    
+    
   }
-
+  
   public boolean isGameOver()
   {
-  return gameOver;
+    return gameOver;
   }
 }

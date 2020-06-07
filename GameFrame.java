@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
@@ -23,13 +25,16 @@ public class GameFrame extends JFrame implements MouseListener
   private JPanel infoPanel;
   private JLabel turnLabel;
   private JButton menuButton;
+  private String whiteName;
+  private String blackName;
   
-  public GameFrame()
+  public GameFrame(String wn, String bn)
   {
+    whiteName = wn;
+    blackName = bn;
     addMouseListener(this); //adds a mouse listener 
     prepareFrame();
     initComponents();
-    createInfoPanel();
     addComponents();
   }
   
@@ -41,14 +46,31 @@ public class GameFrame extends JFrame implements MouseListener
     setTitle("Othello");
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-    
   }
   
   private void initComponents()
   {
     panel = new GamePanel();
     panel.addMouseListener(this);
+    
     infoPanel = new JPanel();
+    infoPanel.setLayout(new GridLayout(1,1));
+    
+    turnLabel = new JLabel("Turn: " + whiteName);
+    turnLabel.setFont(new Font("", Font.PLAIN, 20)); //setting the font really big
+    menuButton = new JButton("Menu");
+    menuButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        removeAll();
+        setVisible(false);
+        IntroFrame intro = new IntroFrame();
+        intro.setVisible(true);
+      }
+    });
+    infoPanel.add(turnLabel);
+    infoPanel.add(menuButton);
+    
+    repaint();
   }
   
   private void addComponents()
@@ -57,18 +79,6 @@ public class GameFrame extends JFrame implements MouseListener
     add(infoPanel, BorderLayout.SOUTH);
   }
   
-  private void createInfoPanel()
-  {
-    infoPanel.setLayout(new GridLayout(1,1));
-    turnLabel = new JLabel("Turn: White");
-    turnLabel.setFont(new Font("", Font.PLAIN, 20)); //setting the font really big
-    menuButton = new JButton("Menu");
-    
-    infoPanel.add(turnLabel);
-    infoPanel.add(menuButton);
-    
-    repaint();
-  }
   /*
    // @TODO: Keep a constant aspect ratio
    @Override
@@ -96,17 +106,25 @@ public class GameFrame extends JFrame implements MouseListener
   {
     if(panel.getIsBlack())
     {
-      turnLabel.setText("Turn: Black");
+      turnLabel.setText("Turn: " + blackName);
       repaint();
     }
     else
     {
-      turnLabel.setText("Turn: White");
+      turnLabel.setText("Turn: " + whiteName);
     }
     
     if(panel.isGameOver())
     {
-      infoPanel.add(new JButton("New Game?"));
+      JButton gameButton = new JButton("Play Again?");
+      gameButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          removeAll();
+          initComponents();
+          addComponents();
+        }
+      });
+      infoPanel.add(gameButton);
     }
   }
 }
