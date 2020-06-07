@@ -94,7 +94,8 @@ public class GameFrame extends JFrame implements MouseListener
   
   public void mousePressed(MouseEvent e) 
   {
-    
+    revalidate();
+    repaint();
     if(panel.getIsBlack())
     {
       turnLabel.setText("Turn: Black");
@@ -110,6 +111,9 @@ public class GameFrame extends JFrame implements MouseListener
     {
       infoPanel.add(new JButton("New Game?"));
     }
+    revalidate();
     repaint();
+    setVisible(false);
+    setVisible(true);
   }
 }

@@ -96,7 +96,6 @@ public class GamePanel extends JPanel implements MouseListener
       if(grid.play(xCor, yCor, isBlack))
       {
         System.out.println("PAINTING ZIBBER");
-        revalidate();
         repaint();
         isBlack = !isBlack;
         turns++;
@@ -143,8 +142,6 @@ public class GamePanel extends JPanel implements MouseListener
         }
         consecutivePass = true;
       }
-     GamePanel.this.revalidate();
-     GamePanel.this.repaint();
      if(grid.checkPlace(xCor,yCor));
      System.out.println("IT IS THERE");
      
