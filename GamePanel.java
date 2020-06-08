@@ -74,6 +74,21 @@ public class GamePanel extends JPanel implements MouseListener
         {
           //no image or no disc
         }
+        
+        try
+        {
+          if(grid.hasLegalMove(r, c, isBlack))
+          {
+          Image pointerImage = ImageIO.read(new File("images/redCircle.png"));
+          System.out.println("at " + r + " " + c);
+          g2.drawImage(pointerImage, 43 + (r * 90), 43 + (c * 90), 86, 86, null);
+          }
+        }
+        
+        catch(Exception e)
+        {
+          System.out.println("why");
+        }
       }
     }
   }
@@ -85,6 +100,7 @@ public class GamePanel extends JPanel implements MouseListener
   
   public void mousePressed(MouseEvent e)
   {
+      System.out.println("X: " + e.getX() + "Y: " + e.getY());
     if(e.getX() > 42 && e.getY() > 42 && e.getX() < 762 && e.getY() < 762)
     {
       int xCor = (e.getX()-42)/90;

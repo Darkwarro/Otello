@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 public class GameFrame extends JFrame implements MouseListener
 {
   private static final int FRAME_WIDTH = 800;
-  private static final int FRAME_HEIGHT = 845;
+  private static final int FRAME_HEIGHT = 800 + 20 + 30;
   
   private GamePanel panel;
   private JPanel infoPanel;
