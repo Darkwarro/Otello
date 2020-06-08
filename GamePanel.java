@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements MouseListener
   private Image backgroundImage;
   private GamePanel gamePanel;
   private OtelloGrid grid;
-  private boolean isBlack = false;
+  private boolean isBlack = true;
   private int turns = 4;
   private boolean consecutivePass = false;
   private boolean gameOver = false;
